@@ -1,0 +1,58 @@
+# =============================================================
+# KONVENSI PENAMAAN FILE MIGRASI LIQUIBASE
+# =============================================================
+#
+# Format: V{nomor}__{deskripsi_singkat}.yaml
+#         ^^^^^^^  ^^  ^^^^^^^^^^^^^^^^^^^
+#         |        |   |
+#         |        |   Deskripsi tabel/perubahan (snake_case)
+#         |        Double underscore (__) sebagai pemisah wajib
+#         Versi migrasi dengan leading zero (V001, V002, ...)
+#
+# Kenapa pakai V001, bukan V1?
+# → Leading zero (001, 002, ...) memastikan urutan file tetap benar
+#   saat di-sort secara alfabetis oleh filesystem.
+#   Contoh tanpa leading zero (SALAH):
+#     V1, V10, V11, V2  ← urutan salah secara alfabetis!
+#   Contoh dengan leading zero (BENAR):
+#     V001, V002, V003, ... V010, V011
+#
+# ATURAN PENTING Liquibase:
+# 1. Jangan pernah EDIT atau HAPUS changeset yang sudah pernah dijalankan!
+#    Liquibase menyimpan checksum setiap changeset di tabel DATABASECHANGELOG.
+#    Kalau kamu edit, Liquibase akan error saat startup.
+# 2. Kalau ingin mengubah schema → buat file baru (V002, V003, dst.)
+# 3. id changeSet harus unik di seluruh project.
+# =============================================================
+
+databaseChangeLog:
+  - changeSet:
+      id: V001-create-products-table
+      author: fannan
+      comment: "Membuat tabel products sebagai tabel awal untuk menyimpan data produk."
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: DECIMAL(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: DATETIME(6)
+                  constraints:
+                    nullable: false
