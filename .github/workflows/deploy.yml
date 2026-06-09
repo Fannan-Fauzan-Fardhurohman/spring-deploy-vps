@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: spring-app-mentor
+      IMAGE_NAME: spring-app2-mentor
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      APP_DIR: /home/backend/spring-app/mentor
+      APP_DIR: /home/backend/spring-app2/mentor
 
     steps:
       - name: Checkout source code
@@ -73,7 +73,7 @@ jobs:
 
             # 📝 Menulis ULANG file .env khusus untuk Production VPS (Gunakan > untuk overwrite)
             echo "DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" > .env
-            echo "APP_PORT=9000" >> .env
+            echo "APP_PORT=9009" >> .env
             echo "SPRING_PROFILES_ACTIVE=prod" >> .env
             
             # Konfigurasi Jaringan & Database VPS
